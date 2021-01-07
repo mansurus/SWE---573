@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission by {{data.author}}</title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
+    <style>
+        body {
+            font-family: "Ubuntu", sans-serif;
+          }
+    </style>
+
+</head>
+
+
+<body style="background-color:#f6f1fa">
+
+  <div class="navbar navbar-expand-sm navbar-dark" style="background-color: #4B0082; color: #f3f3f3;">
+      <div class="container"> 
+          <a href="/" class="navbar-brand"><i class="fab fa-reddit-alien"></i>r/Coronavirus </a>
+          <ul class="navbar-nav mr-auto">
+              {% if user.is_authenticated %}
+              <li 
+                      {% if 'news' in request.path %}
+                          class="nav-item active"
+                      {% else %}
+                          class="nav-item"
+                      {% endif %}  
+              >
+                  <a href="{% url 'result' %}" class="nav-link"><i class="fab fa-reddit"></i>News</a>
+              </li>
+
+              
+              <li
+                      {% if 'vaccine' in request.path %}
+                          class="nav-item active"
+                      {% else %}
+                          class="nav-item"
+                      {% endif %}  
+              >
+              
+              <a href="{% url 'vaccine' %}" class="nav-link"><i class="fas fa-syringe"></i>Vaccine</a>
+
+              </li>
+              {% endif %}
+          </ul>
+          <ul class="navbar-nav">
+              {% if user.is_authenticated %}
+                  
+                  <li class="nav-item">
+                      <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">({{ user.username }}) Logout</a>
+                      <form action="{% url 'logout' %}" method="POST" id="logout">
+                          {%csrf_token%}
+                          <input type="hidden">
+                      </form>
+                  </li>
+              {% else %}
+                  <li
+                  {% if 'login' in request.path %}
+                      class="nav-item active"
+                  {% else %}
+                      class="nav-item"
+                  {% endif %}  
+                  >
+                  <a href="{% url 'login' %}" class="nav-link "><i class="fas fa-user"></i><span>   </span>Login</a>
+                  </li>
+                  <li
+                  {% if 'register' in request.path %}
+                      class="nav-item active"
+                  {% else %}
+                      class="nav-item"
+                  {% endif %}  
+                  ><a href="{% url 'register' %}" class="nav-link ">Register</a>   
+                  </li>
+              {% endif %}
+              
+              
+          </ul>
+      </div>
+  </div>
+
+  <div class="container border border-light" style="margin-top: 1%; padding: 1% 1% 1% 1%; background-color:#e2d7f0; border-radius: 5%;">
+    <h2 style="font-weight: 900;">{{data.title}}</h2>
+    <h6>By <a href="https://www.reddit.com/user/{{data.author}}" target="_blank">{{data.author}}</a></h6>
+    <p class="card-text">Post Score: {{data.score}}</p>
+    {% if data.link_flair_text %}
+    <p class="card-text">Flair: {{data.link_flair_text}}</p>
+    {% endif %}
+
+    
+
+      
+        <p>{{data.selftext}}</p>
+        <a href="{{data.url}}">{{data.url}}</a>
+    </div>
+    <div class="container">
+        
+        {% for comment in data.comments %}
+        <div class="card border border-light" style="margin-top: 1%; background-color:#dfcef1; border-radius: 5%;">
+            <h3 class="card-title" style="margin-left: 2%; margin-top: 1%;">Main Comment by     <span><a href="https://www.reddit.com/user/{{data.author}}" target="_blank" style="font-style:italic; font-size: medium !important;">{{comment.author}}</a></span></h3>
+            
+            <div class="card-body">
+                <p>{{comment.body}}</p>
+            </div>
+        </div>
+        {% for reply in comment.replies %}
+            {% if reply.body is not None %}
+            <div class="card border border-light" style="margin-left: 2%; margin-top: 1%; background-color:#bdacd3; border-radius: 5%;">
+                <h5 class="card-title" style="margin-left: 2%; margin-top: 1%;">Sub-Comment by     <span><a href="https://www.reddit.com/user/{{reply.author}}" target="_blank" style="font-style:italic; font-size: medium !important;">{{reply.author}}</a></span></h5>
+                
+                    <div class="card-body">
+                        <p>{{reply.body}}</p>
+                    </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        {%endfor%}
+
+    </div>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/popper.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+
+</body>
+</html>

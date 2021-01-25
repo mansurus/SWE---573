@@ -1,0 +1,14 @@
+create new image
+--- docker build -t "name" .
+
+run the image
+                  local   cntr 
+--- docker run -p "8080":"8000" "image_id"
+
+go to container
+--- docker exec -it "container_id" bash
+
+delete image
+--- docker rmi -f "image_id"
+
+

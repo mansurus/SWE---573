@@ -1,0 +1,20 @@
+.footer {
+    background-color: #f5f5f5;
+    
+}
+
+.topNav {
+    background: rgb(154,63,251);
+    background: radial-gradient(circle, rgba(154,63,251,1) 0%, rgba(216,70,252,1) 100%);
+    border-bottom: solid rgb(129, 101, 151);
+}
+
+#bg {
+    height: 100%;
+    width: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    
+}

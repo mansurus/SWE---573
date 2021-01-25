@@ -1,0 +1,1 @@
+web: gunicorn swe573.wsgi --log-file -

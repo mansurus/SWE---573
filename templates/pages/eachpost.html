@@ -49,6 +49,17 @@
               <a href="{% url 'vaccine' %}" class="nav-link"><i class="fas fa-syringe"></i>Vaccine</a>
 
               </li>
+              <li
+                      {% if 'analyzer' in request.path %}
+                          class="nav-item active"
+                      {% else %}
+                          class="nav-item"
+                      {% endif %}  
+              >
+              
+              <a href="{% url 'analyzer' %}" class="nav-link"><i class="fas fa-search"></i>Analyze</a>
+
+              </li>
               {% endif %}
           </ul>
           <ul class="navbar-nav">

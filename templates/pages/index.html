@@ -2,7 +2,30 @@
 
 {% block content %}
 
-    <h1>Covid-19 Pandemic</h1>
+    {% if not user.is_authenticated %}
+
+    <h1 style="text-align: center;">This website is a product of a school project about Coronavirus Pandemic. </h1>
+
+    <br>
+    <br>
+   
+
+    <h1 style="text-align: center;">Please <a href="{% url 'login' %}" >Login</a> or <a href="{% url 'register' %}" >Register</a> to learn more.</h1>
+
+    {% endif %}
+
     
+    {% if user.is_authenticated %}
+
+    <h1 style="text-align: center;">Welcome to Reddit Analyzer</h1>
+
+    <br>
+    <br>
+   
+    <h2 style="text-align: center;">You can navigate through the navigation bar above to learn more about what people on Reddit 
+        think about Coronavirus pandemic and how they react.  </h2>
+
+
+    {% endif %}
     
 {% endblock %}

@@ -31,7 +31,7 @@ def redditsearch(request):
 
 def vaccineSub(request, **kwargs):
     data = []
-    url = f"https://api.pushshift.io/reddit/search/submission/?q=vaccine&subreddit=coronavirus"
+    url = f"https://api.pushshift.io/reddit/search/submission/?q=vaccine&subreddit=coronavirus&size=50"
     payload =kwargs
     reddit_request = requests.get(url, params=payload)
     json_response = reddit_request.json() 
@@ -66,7 +66,7 @@ def searchKeyword(request, **kwargs):
             messages.add_message(request, messages.ERROR, 'Please enter correct values!')
             return redirect("vaccine")
             
-    url = linkKeyword+keyword+linkDays+day+"d"
+    url = linkKeyword+keyword+linkDays+day+"d&size=50"
     payload =kwargs
     reddit_request1 = requests.get(url, params=payload)
     json_response1 = reddit_request1.json() 

@@ -42,8 +42,10 @@ def getKeywordBasedComments(text):
         comment=submission['body']
         commentASCII = comment.encode(encoding='ascii', errors='ignore').decode()
         data.append(commentASCII)
-
+    
     return data
+        
+    
 
 
 def processFetchedComments(comment, negativeComments, neutralComments, positiveComments):
@@ -73,9 +75,9 @@ def nltkView(request, **kwargs):
     if request.method=='POST':
         try:
             keyword = request.POST['searchForAnalyze']
-        except ValueError:
+        except:
             messages.add_message(request, messages.ERROR, 'Please enter correct values!')
-            return redirect("index")
+            return redirect("erroranalyze")
     comments = getKeywordBasedComments(keyword)
 
     neg = []
@@ -124,11 +126,16 @@ def nltkView(request, **kwargs):
         context2 = {"negLength":lengthOfNeg,
                     "neuLength":lengthOfNeu,
                     "posLength":lengthOfPos}
+    if len(comments) == 0 :
+        return redirect("erroranalyze")
+    else:
+        return render(request, "pages/analyze.html", {
+            "newNeg":newNeg,
+            "newNeu":newNeu,
+            "newPos":newPos,
+            'context2': context2,
+        })
 
-    return render(request, "pages/analyze.html", {
-        "newNeg":newNeg,
-        "newNeu":newNeu,
-        "newPos":newPos,
-        'context2': context2,
-    })
+def errorAnalyze(request):
+    return render(request, "pages/404analyze.html")
 
